@@ -1,7 +1,11 @@
 package spring.microservice.blog.feign;
 
+import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import spring.microservice.blog.to.User;
 
 import java.util.List;
@@ -9,24 +13,29 @@ import java.util.List;
 /**
  * Created by josenio_camelo on 08/03/2017.
  */
-public class UserRestClientFallback implements UserRestClient {
+@Component
+public class UserRestClientFallback implements FallbackFactory<UserRestClient> {
     Logger log = LoggerFactory.getLogger(UserRestClientFallback.class);
 
-    @Override
-    public List<User> listPersons() {
-        log.error("Error: listPersons");
-        throw new RuntimeException();
-    }
 
     @Override
-    public List<User> findByName(String name) {
-        log.error("Error: listPersons");
-        throw new RuntimeException();
-    }
+    public UserRestClient create(Throwable cause) {
+        return new UserRestClient() {
 
-    @Override
-    public User add(User phoneEntry) {
-        log.error("Error on listPersons");
-        throw new RuntimeException();
+            @Override
+            public List<User> listPersons() {
+                return null;
+            }
+
+            @Override
+            public List<User> findByName(@PathVariable String name) {
+                return null;
+            }
+
+            @Override
+            public User add(@RequestBody User phoneEntry) {
+                return null;
+            }
+        };
     }
 }

@@ -9,14 +9,14 @@ import spring.microservice.blog.to.User;
 
 import java.util.List;
 
-@FeignClient(value = "user-module", fallback = UserRestClientFallback.class)
+@FeignClient(value = "user-module", fallbackFactory = UserRestClientFallback.class)
 public interface  UserRestClient {
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public List<User> listPersons();
 
     @RequestMapping(value = "/user/{name}", method = RequestMethod.GET)
-    public List<User> findByName(@PathVariable String name);
+    public List<User> findByName(@PathVariable(name = "name") String name);
 
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public User add(@RequestBody User phoneEntry);

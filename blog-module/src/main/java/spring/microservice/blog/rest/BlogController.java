@@ -1,6 +1,7 @@
 package spring.microservice.blog.rest;
 
 import spring.microservice.blog.entity.Blog;
+import spring.microservice.blog.feign.UserRestClient;
 import spring.microservice.blog.persistence.BlogRepository;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ import java.util.Map;
 public class BlogController {
     @Autowired
     private BlogRepository blogRepository;
+
+    @Autowired
+    private UserRestClient userClient;
 
     @RequestMapping(value = "/blog", method = RequestMethod.GET)
     public List<Blog> listPersons() {
