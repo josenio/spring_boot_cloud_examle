@@ -1,0 +1,7 @@
+/out
+/.gradle
+/blog-module/build
+/config-module/build
+/discovery-module/build
+/gateway-module/build
+/user-module/build
