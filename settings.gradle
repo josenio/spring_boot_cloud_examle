@@ -1,0 +1,3 @@
+rootProject.name = 'parent'
+
+include "user-module", "blog-module", "discovery-module", "view-module", "gateway-module", "config-module"
