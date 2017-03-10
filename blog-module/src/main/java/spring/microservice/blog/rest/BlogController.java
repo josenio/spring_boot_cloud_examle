@@ -6,6 +6,7 @@ import spring.microservice.blog.persistence.BlogRepository;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import spring.microservice.blog.to.User;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ public class BlogController {
     private BlogRepository blogRepository;
 
     @Autowired
+    @SuppressWarnings("SpringJavaAutowiringInspection")
     private UserRestClient userClient;
 
     @RequestMapping(value = "/blog", method = RequestMethod.GET)
@@ -37,9 +39,10 @@ public class BlogController {
     }
 
     @RequestMapping(value = "/blog/comments", method = RequestMethod.POST)
-    public Blog addComment(@RequestBody Map<String, String> commentEntry, @RequestHeader(value="user-id") Long userId) {
-        Blog dbBlog = blogRepository.findOne(Long.parseLong(commentEntry.get("id")));
-        dbBlog.getComments().add(commentEntry.get("text"));//TODO concat user name with text
+    public Blog addComment(@RequestBody Map<String, String> commentEntry, @RequestHeader(value="user-id") String userId) {
+        Blog dbBlog = blogRepository.findOne(Long.parseLong(commentEntry.get("blogId")));
+        User user = userClient.findById(Long.parseLong(userId));
+        dbBlog.getComments().add(user.getName() + ": " + commentEntry.get("commentText"));
         blogRepository.save(dbBlog);
         return dbBlog;
     }

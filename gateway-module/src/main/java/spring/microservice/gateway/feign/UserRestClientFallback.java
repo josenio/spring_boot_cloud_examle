@@ -1,4 +1,4 @@
-package spring.microservice.blog.feign;
+package spring.microservice.gateway.feign;
 
 import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import spring.microservice.blog.to.User;
+import spring.microservice.gateway.to.User;
 
 import java.util.List;
 
@@ -30,6 +30,11 @@ public class UserRestClientFallback implements FallbackFactory<UserRestClient> {
 
             @Override
             public User findById(@PathVariable("id") Long id) {
+                return null;
+            }
+
+            @Override
+            public User findByName(@PathVariable("name") String name) {
                 return null;
             }
 
