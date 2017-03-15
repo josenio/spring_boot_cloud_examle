@@ -10,6 +10,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -47,8 +49,14 @@ public class GatewayApplication {
             public Object run() {
                 RequestContext ctx = RequestContext.getCurrentContext();
                 HttpServletRequest request = ctx.getRequest();
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                String currentUser = authentication.getName();
 
-                log.info(String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
+                ctx.addZuulRequestHeader("userName", authentication.getName());
+
+                log.info(String.format("[%s] %s request to %s ",
+                        currentUser, request.getMethod(), request.getRequestURL().toString())
+                        + request.getSession(false).getId());
 
                 return null;
             }

@@ -31,17 +31,17 @@ public class BlogController {
     }
 
     @RequestMapping(value = "/blog", method = RequestMethod.POST)
-    public Blog add(@RequestBody Blog blogEntry, @RequestHeader(value="user-id") Long userId) {
-        blogEntry.setUserId(userId);
+    public Blog add(@RequestBody Blog blogEntry, @RequestHeader(value="userName", defaultValue = "notFound") String userName) {
+        blogEntry.setUserId(userClient.findByName(userName).getId());
         blogEntry.setComments(null);
         blogRepository.save(blogEntry);
         return blogEntry;
     }
 
     @RequestMapping(value = "/blog/comments", method = RequestMethod.POST)
-    public Blog addComment(@RequestBody Map<String, String> commentEntry, @RequestHeader(value="user-id") String userId) {
+    public Blog addComment(@RequestBody Map<String, String> commentEntry, @RequestHeader(value="userName") String userName) {
         Blog dbBlog = blogRepository.findOne(Long.parseLong(commentEntry.get("blogId")));
-        User user = userClient.findById(Long.parseLong(userId));
+        User user = userClient.findByName(userName);
         dbBlog.getComments().add(user.getName() + ": " + commentEntry.get("commentText"));
         blogRepository.save(dbBlog);
         return dbBlog;

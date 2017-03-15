@@ -1,0 +1,90 @@
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
+<header>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+</header>
+<body>
+<div id="app">
+    <accordion :one-at-atime="checked" type="info">
+        <panel is-open type="primary">
+            <strong slot="header"><u>List Blog Posts</u></strong>
+
+            <ol>
+                <li v-for="blog in listOfBlogs">
+                    {{ blog.title }} : {{ blog.text }}
+                </li>
+            </ol>
+        </panel>
+        <panel header="Add Blog Posts">
+            <form-group :valid.sync="isFormValidated">
+                <bs-input :value.sync="newBlog.title" label="title" help="Type the title."
+                          error="Insert title" placeholder="title"  minlength="3"
+                          required icon></bs-input>
+                <bs-input :value.sync="newBlog.text" label="text" help="Type the text." error="Insert text"
+                          placeholder="text"  minlength="5" required
+                          icon></bs-input>
+                <button type="button" class="btn btn-primary" :disabled="!isFormValidated" @click="submitBlog()">
+                    Add Blog Post
+                </button>
+            </form-group>
+
+        </panel>
+
+    </accordion>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.28/vue.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.2.0/vue-resource.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-strap/1.1.36/vue-strap.js"></script>
+<script>
+    var app = new Vue({
+        components: {
+            alert: VueStrap.alert,
+            accordion: VueStrap.accordion,
+            'bs-input': VueStrap.input,
+            'modal': VueStrap.modal,
+            'form-group': VueStrap.formGroup,
+            panel: VueStrap.panel
+        },
+        el: '#app',
+        data: {
+            newBlog: {
+                "title": "",
+                "text": ""
+            },
+            listOfBlogs: [],
+            isFormValidated: true,
+            isNameValidated: true
+        },
+        methods: {
+            submitBlog: function () {
+                this.$http.post('/blog-module/blog', this.newBlog).then(
+                    response => {
+                        refreshData();
+                    });
+                this.newBlog.title = '';
+                this.newBlog.text = '';
+            }
+        }
+    })
+    function refreshData() {
+        app.$http.get('/blog-module/blog').then(
+            response => {
+                app.listOfBlogs = response.data;
+            });
+    }
+    refreshData();
+</script>
+
+</body>
+</html>

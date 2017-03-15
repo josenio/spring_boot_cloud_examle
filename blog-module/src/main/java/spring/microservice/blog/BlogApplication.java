@@ -20,10 +20,10 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @SpringBootApplication
 @EnableSwagger2
 @EnableFeignClients(basePackages = { "spring.microservice.blog.feign" })
-public class DemoBootApplication {
+public class BlogApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoBootApplication.class, args);
+		SpringApplication.run(BlogApplication.class, args);
 	}
 
     @Bean
@@ -33,8 +33,8 @@ public class DemoBootApplication {
 	    ApiInfo apiInfo = new ApiInfoBuilder()
                 .title("Spring REST Sample with Swagger")
                 .description("Spring REST Sample with Swagger")
-                .contact(new Contact("Josênio Camelo",
-                        "www.atlantico.com.br", "josenio_camelo@atlantico.com.br"))
+                .contact(new Contact("Cantact Name",
+                        "home_page", "email@gmail.com"))
                 .license("Apache License Version 2.0")
                 .version("1.0")
                 .build();

@@ -31,8 +31,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().regexMatchers(".*").authenticated().and()
-                .httpBasic();
+        http
+            .authorizeRequests()
+                .regexMatchers(".*")
+                .authenticated()
+            .and()
+                .httpBasic()
+            .and().csrf().disable();
     }
 
     @Autowired
