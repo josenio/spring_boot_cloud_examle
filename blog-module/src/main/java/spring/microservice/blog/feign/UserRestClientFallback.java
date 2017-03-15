@@ -22,13 +22,14 @@ public class UserRestClientFallback implements FallbackFactory<UserRestClient> {
     public UserRestClient create(Throwable cause) {
         return new UserRestClient() {
 
+
             @Override
             public List<User> listPersons() {
                 return null;
             }
 
             @Override
-            public List<User> findByName(@PathVariable String name) {
+            public User findById(@PathVariable("id") Long id) {
                 return null;
             }
 

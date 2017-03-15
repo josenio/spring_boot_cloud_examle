@@ -17,6 +17,9 @@ public class Blog {
     private long userId;
 
     @NotNull
+    private String title;
+
+    @NotNull
     private String text;
 
     @ElementCollection
@@ -39,6 +42,14 @@ public class Blog {
 
     public void setUserId(long userId) {
         this.userId = userId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getText() {
