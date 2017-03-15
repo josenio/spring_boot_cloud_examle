@@ -2,7 +2,6 @@ package spring.microservice.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -17,10 +16,10 @@ import static springfox.documentation.builders.PathSelectors.regex;
 @EnableEurekaClient
 @SpringBootApplication
 @EnableSwagger2
-public class DemoBootApplication {
+public class UserApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoBootApplication.class, args);
+		SpringApplication.run(UserApplication.class, args);
 	}
 
     @Bean

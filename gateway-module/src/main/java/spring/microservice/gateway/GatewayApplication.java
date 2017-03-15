@@ -48,12 +48,12 @@ public class GatewayApplication {
             @Override
             public Object run() {
                 RequestContext ctx = RequestContext.getCurrentContext();
-                HttpServletRequest request = ctx.getRequest();
-                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-                String currentUser = authentication.getName();
 
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                 ctx.addZuulRequestHeader("userName", authentication.getName());
 
+                HttpServletRequest request = ctx.getRequest();
+                String currentUser = authentication.getName();
                 log.info(String.format("[%s] %s request to %s ",
                         currentUser, request.getMethod(), request.getRequestURL().toString())
                         + request.getSession(false).getId());
