@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableFeignClients(basePackages = { "spring.microservice.gateway.feign" })
-
 public class GatewayApplication {
 
     public static void main(String[] args) {
