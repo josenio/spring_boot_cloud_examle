@@ -1,5 +1,6 @@
 /out
 /.gradle
+/.idea
 /blog-module/build
 /config-module/build
 /discovery-module/build
