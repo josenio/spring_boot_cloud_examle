@@ -29,8 +29,8 @@ public class UserApplication {
 	    ApiInfo apiInfo = new ApiInfoBuilder()
                 .title("Spring REST Sample with Swagger")
                 .description("Spring REST Sample with Swagger")
-                .contact(new Contact("Josênio Camelo",
-                        "www.atlantico.com.br", "josenio_camelo@atlantico.com.br"))
+                .contact(new Contact("Contact Name",
+                        "site", "email"))
                 .license("Apache License Version 2.0")
                 .version("1.0")
                 .build();
